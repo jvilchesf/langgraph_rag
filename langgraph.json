@@ -1,0 +1,12 @@
+{
+  "dockerfile_lines": [],
+  "graphs": {
+    "agent_retriever": "./src/agent_retriever/agent_retriever.py:graph",
+    "agent_sql": "./src/agent_sql/agent_sql.py:graph"
+  },
+  "env": ".env",
+  "python_version": "3.11",
+  "dependencies": [
+    "."
+  ]
+}
