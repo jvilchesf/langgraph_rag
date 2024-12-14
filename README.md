@@ -8,8 +8,8 @@ You’ll find two main flows:
 2. **SQL Agent Flow** – Takes natural language queries and converts them into SQL queries executed against the SQLite database created in the Retriever Flow.
 
 <div style="display: flex;">
-  <img src="/images/portfolio_genAI_langgraph_graph_1.png" style="margin-right: 10px;" width = 500 height = 500>
-  <img src="/images/portfolio_genAI_langgraph_graph_2.png" width = 500 height = 500>
+  <img src="/images/portfolio_genAI_langgraph_graph_1.png" style="margin-right: 10px;" width = 400 height = 500>
+  <img src="/images/portfolio_genAI_langgraph_graph_2.png" width = 400 height = 500>
 </div>
 
 ---
