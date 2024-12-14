@@ -8,8 +8,8 @@ You’ll find two main flows:
 2. **SQL Agent Flow** – Takes natural language queries and converts them into SQL queries executed against the SQLite database created in the Retriever Flow.
 
 <div style="display: flex;">
-  <img src="/images/portfolio_genAI_langgraph_graph_1.png" style="margin-right: 10px;">
-  <img src="/images/portfolio_genAI_langgraph_graph_2.png">
+  <img src="/images/portfolio_genAI_langgraph_graph_1.png" style="margin-right: 10px;" width = 500 height = 500>
+  <img src="/images/portfolio_genAI_langgraph_graph_2.png" width = 500 height = 500>
 </div>
 
 ---
@@ -78,7 +78,34 @@ Below is a high-level workflow describing how the project works in two major flo
 
 ## Folder Structure
 
-images/ src/ ├─ agent_retriever/ │ ├─ files/ │ │ ├─ 20241122-4572815-umsatz.csv │ │ ├─ account-statement_2023-11-01_2024-11-10_en_78d98f.csv │ │ └─ account-statement_2023-11-01_2024-11-10_en-ie_e94656.csv │ ├─ init.py │ ├─ agent_retriever.py │ ├─ augmented_functions.py │ ├─ configration.py │ ├─ merged_csv.py │ ├─ prompt.py │ ├─ state.py │ └─ utils.py ├─ agent_sql/ │ ├─ agent_sql.py │ ├─ configuration.py │ ├─ database_utils.py │ ├─ database.py │ ├─ llm_manager.py │ ├─ prompt.py │ └─ state.py ├─ .env ├─ langgraph.json ├─ pyproject.tml └─ README.md
+    images/
+    src/
+    ├─ agent_retriever/
+    │   ├─ files/
+    │   │   ├─ 20241122-4572815-umsatz.csv
+    │   │   ├─ account-statement_2023-11-01_2024-11-10_en_78d98f.csv
+    │   │   └─ account-statement_2023-11-01_2024-11-10_en-ie_e94656.csv
+    │   ├─ __init__.py
+    │   ├─ agent_retriever.py
+    │   ├─ augmented_functions.py
+    │   ├─ configuration.py
+    │   ├─ merged_csv.py
+    │   ├─ prompt.py
+    │   ├─ state.py
+    │   └─ utils.py
+    ├─ agent_sql/
+    │   ├─ agent_sql.py
+    │   ├─ configuration.py
+    │   ├─ database.py
+    │   ├─ database_utils.py
+    │   ├─ llm_manager.py
+    │   ├─ prompt.py
+    │   └─ state.py
+    ├─ .env
+    ├─ langgraph.json
+    ├─ pyproject.tml
+    └─ README.md
+
 
 
 ---
