@@ -47,34 +47,6 @@ Bank transactions often come in varied formats and languages. Some statements ar
 
 ---
 
-## Steps
-Below is a high-level workflow describing how the project works in two major flows:
-
-### 1. Retriever Flow
-1. **Read CSV Files**:  
-   - Inspect their encodings (some are semicolon-delimited, one is in German).
-2. **Map Columns via LLM**:  
-   - Use an LLM prompt to map non-standard column headers to uniform standardized fields (`Date`, `Amount (EUR)`, etc.).
-3. **Concatenate Data**:  
-   - Merge all CSV files into one DataFrame, preserving only standardized fields.
-4. **Augment Data**:  
-   - Split the DataFrame into chunks and pass them through an LLM prompt that translates the data to English and adds extra columns (`Transaction Type`, `Merchant Category`, etc.).
-5. **Create SQLite Database**:  
-   - Save the final, augmented DataFrame to an SQLite file for further querying.
-
-### 2. SQL Agent Flow
-1. **Parse Natural Language Query**:  
-   - Break down the user’s question to identify relevant tables and columns.  
-2. **Discover Unique Nouns**:  
-   - Identify unique nouns or important values from the relevant columns (e.g., merchant names).
-3. **Generate SQL**:  
-   - Use the parsed question plus the discovered nouns to generate an SQL query string via an LLM prompt.
-4. **Validate & Fix SQL**:  
-   - Double-check the generated SQL against the known schema; fix any errors in table or column names.
-5. **Execute SQL**:  
-   - Run the validated SQL query against the SQLite database and return the results.
-
----
 
 ## Folder Structure
 
@@ -82,9 +54,9 @@ Below is a high-level workflow describing how the project works in two major flo
     src/
     ├─ agent_retriever/
     │   ├─ files/
-    │   │   ├─ 20241122-4572815-umsatz.csv
-    │   │   ├─ account-statement_2023-11-01_2024-11-10_en_78d98f.csv
-    │   │   └─ account-statement_2023-11-01_2024-11-10_en-ie_e94656.csv
+    │   │   ├─ dummy1.csv
+    │   │   ├─ dummy2.csv
+    │   │   └─ dummy3.csv
     │   ├─ __init__.py
     │   ├─ agent_retriever.py
     │   ├─ augmented_functions.py
@@ -106,54 +78,38 @@ Below is a high-level workflow describing how the project works in two major flo
     ├─ pyproject.tml
     └─ README.md
 
-
-
 ---
 
-## Data Structure
-The final DataFrame (after augmentation) will contain columns like:
-- **Date**  
-- **Description**  
-- **Merchant**  
-- **Product_service**  
-- **Amount (EUR)**  
-- **Currency**  
-- **Transaction Type**  
-- **Merchant Name**  
-- **Merchant Category**  
-- **Payment Method**  
-- **Location**  
-- **Recurring**  
-- **Budget Category**  
-- **Tags**  
-- **Notes**  
-- **Payment Status**
+# Agent retriever
 
-Once augmented, these records are stored in an SQLite database (`augmented_data.sqlite`) under a table named `transactions`.  
+## Files
 
----
+- `__init__.py`: File created to trigger the entire process.
+- `agent_retriever.py`: This is the main file of the process, where other important methods such as `standardize_csv`, `augmented_data`, and `create_sqlite` are called. The graph is also created here.
+- `merged_csv.py`: This file defines the class responsible for merging the CSVs. Here is where the files are read, sent to the LLM to obtain standardized column names, and a first version of the data is sent to the next step in the flow in a DataFrame format. This class is called from `agent_retriever.py` in the `standardize_csv` function.
+- `augmented_functions.py`: Here, a class is defined to take the already processed and standardized data and extract more valuable information based on it. The problem is that since these three files are different, when the columns are standardized, it is hard to infer new columns based on text. For example, a PayPal payment for a monthly Spotify subscription doesn’t straightforwardly reveal extra fields like marketplace, recurring payment, payment method, etc., unless you rely on a dictionary. Maintaining that dictionary can be time-consuming. This is where an LLM truly helps by accurately inferring new columns in a much simpler way.
+- Function `create_sqlite` in `agent_retriever.py`: This is an important function to save the data in a .sql format to be queried later.
+- `configuration.py`: This file defines process variables needed across multiple methods. Additionally, it contains an important function called `from_runnable_config`, which is used to retrieve these variables when needed.
+- `prompt.py`: The prompt is very important; here, the queries and desired output from the LLM are defined. This is where the magic happens.
+- `state.py`: States are structures of data that allow the saving of the answer of each step and communicate them to the next step. They are a very important part of the agents' workflows in langgraph.
+- `utils.py`: File created to define an LLM function call.
+igh-level workflow describing how the project works in two major flows:
 
-## Important Files
+### Retriever Flow
+1. **Read CSV Files**:  
+   - Inspect their encodings (some are semicolon-delimited, one is in German).
+2. **Map Columns via LLM**:  
+   - Use an LLM prompt to map non-standard column headers to uniform standardized fields (`Date`, `Amount (EUR)`, etc.).
+3. **Concatenate Data**:  
+   - Merge all CSV files into one DataFrame, preserving only standardized fields.
+4. **Augment Data**:  
+   - Split the DataFrame into chunks and pass them through an LLM prompt that translates the data to English and adds extra columns (`Transaction Type`, `Merchant Category`, etc.).
+5. **Create SQLite Database**:  
+   - Save the final, augmented DataFrame to an SQLite file for further querying.
 
-### **`agent_retriever.py`**
-Defines the **Langgraph flow** for reading, merging, augmenting, and storing CSV data:
-1. **standardize_csv:** Merges CSV files into a standardized DataFrame using `CSVHanlder`.
-2. **augmented_data:** Augments the DataFrame by adding new columns (transaction type, merchant category, etc.) via an LLM.
-3. **create_sqlite:** Writes the augmented DataFrame into an SQLite file.
+# Agent Sql
 
-### **`merged_csv.py`**
-Contains logic in `CSVHanlder` for:
-- Reading CSVs with different delimiters/encodings (German vs. English).
-- Invoking an LLM prompt to map existing columns to standardized fields.
-- Generating a final merged DataFrame.
-
-### **`augmented_functions.py`**
-Implements chunk-based augmentation. Splits the DataFrame into manageable chunks and uses a prompt to create additional columns (`Transaction Type`, etc.) in English.
-
-### **`prompt.py` (within `agent_retriever`)**
-Holds the prompt templates used to:
-- Map CSV columns to standardized fields.
-- Augment the data with new columns.
+## Files
 
 ### **`agent_sql.py`**
 Defines the **Langgraph flow** for parsing user questions, generating SQL, validating it, and executing it. The nodes are:
@@ -170,26 +126,24 @@ Defines the **Langgraph flow** for parsing user questions, generating SQL, valid
 ### **`llm_manager.py`**
 Implements a manager class that interacts with the LLM (OpenAI Chat model). Used by both the Retriever flow and SQL flow for prompt engineering.
 
+### **`prompt.py` (within `agent_retriever`)**
+Holds the prompt templates used to:
+- Map CSV columns to standardized fields.
+- Augment the data with new columns.
+
 ### **`configuration.py`**
 Holds dataclasses that store configuration parameters, such as the database path or the model name. Each flow (retriever vs. SQL agent) has its own configuration class.
 
----
+## SQL Agent Flow
+1. **Parse Natural Language Query**:  
+   - Break down the user’s question to identify relevant tables and columns.  
+2. **Discover Unique Nouns**:  
+   - Identify unique nouns or important values from the relevant columns (e.g., merchant names).
+3. **Generate SQL**:  
+   - Use the parsed question plus the discovered nouns to generate an SQL query string via an LLM prompt.
+4. **Validate & Fix SQL**:  
+   - Double-check the generated SQL against the known schema; fix any errors in table or column names.
+5. **Execute SQL**:  
+   - Run the validated SQL query against the SQLite database and return the results.
 
-## Usage
-1. **Clone the Repo**  
-   ```bash
-   git clone https://github.com/your-username/langchain-langgraph-bank-transactions.git
 
-2. **Install Dependencies**
-
-cd langchain-langgraph-bank-transactions
-pip install -r requirements.txt
-
-3. **Set Up Environment**
-Create a .env file or specify environment variables as needed (e.g., for OpenAI credentials).
-
-3. **Run the Retriever Flow**
-Execute the agent_retriever.py flow to generate augmented_data.sqlite.
-
-3. **Run the SQL Agent Flow**
-Use agent_sql.py to run queries in natural language. The code will parse your question, build & fix SQL, then execute it.
