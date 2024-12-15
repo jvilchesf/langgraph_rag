@@ -1,4 +1,4 @@
-# Langchain & Langgraph Personal Project
+# Langchain & Langgraph Transactions
 
 ## Overview
 This personal project demonstrates how to use **Langchain** and **Langgraph** to unify and analyze banking transactions from three different CSV files. The process involves standardizing multilingual transactions and enabling a natural language interface for SQL queries against these records.

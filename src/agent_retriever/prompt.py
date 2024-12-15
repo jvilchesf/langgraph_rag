@@ -48,17 +48,17 @@ I have a DataFrame containing bank transactions with the following columns:
 
 | Date                 | Description                        | Merchant                  | Product_service                       | Amount (EUR) | Currency |
 |----------------------|------------------------------------|---------------------------|---------------------------------------|--------------|----------|
-| 2024-11-21 00:00:00  | FOLGELASTSCHRIFT                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038356944342/. MEDION AG, Ihr Einkauf bei MED... | -1.99        | EUR      |
-| 2024-11-19 00:00:00  | FOLGELASTSCHRIFT                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038321988189/PP.5854.PP/. DB Vertrieb GmbH, I... | -52.20       | EUR      |
-| 2024-11-14 00:00:00  | GUTSCHR. UEBERWEISUNG                | Techniker Krankenkasse    | TK-BuchNr 04407888734 Beitragserstattung | 125.21       | EUR      |
-| 2024-11-13 00:00:00  | GUTSCHR. UEBERWEISUNG                | INIS ENVIRONMENTAL CONSULTANTS... | AWV-MELDEPFLICHT BEACHTEN HOTLINE BUNDESBANK (0800) 1234-111 | 10.00        | EUR      |
-| 2024-11-13 00:00:00  | FOLGELASTSCHRIFT                    | E-Plus Service GmbH ...   | Gebuehr fuer Kombi-Paket S (alt) fuer Ihr Prep... | -7.99        | EUR      |
+| 2024-11-21 00:00:00  | Dummy                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038356944342/. MDION AG, Ihr  bei MED... | -1.99        | EUR      |
+| 2024-11-19 00:00:00  | Dummy                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038321988189/PP.5854.PP/. DB Vertrieb GmbH, I... | -52.20       | EUR      |
+| 2024-11-14 00:00:00  | Dummy. UEBERWEISUNG                | Techniker Krankenkasse    | TK-BuchNr 04407888734 Beitragserstattung | 125.21       | EUR      |
+| 2024-11-13 00:00:00  | Dummy. UEBERWEISUNG                |   CONSULTANTS... | AWV- BEACHTEN HOTLINE  () 1234-111 | 10.00        | EUR      |
+| 2024-11-13 00:00:00  | Dummy                    | E-Plus Service GmbH ...   | Gebuehr fuer Kombi-Paket S (alt) fuer Ihr Prep... | -7.99        | EUR      |
 | ...                  | ...                                | ...                       | ...                                   | ...          | ...      |
-| 2024-10-23 12:37:48  | From SIDDHARTH SONNY                | TRANSFER                  | Current                               | 15.40        | EUR      |
-| 2024-10-23 12:38:18  | To VANESSA HOFER                    | TRANSFER                  | Current                               | -15.00       | EUR      |
-| 2024-10-31 17:34:07  | From VANESSA HOFER                  | TRANSFER                  | Current                               | 0.10         | EUR      |
-| 2024-11-07 08:51:21  | From VANESSA HOFER                  | TRANSFER                  | Current                               | 10.00        | EUR      |
-| 2024-11-07 09:10:17  | To SIDDHARTH SONNY                  | TRANSFER                  | Current                               | -9.00        | EUR      |
+| 2024-10-23 12:37:48  | From Dummy SONNY                | TRANSFER                  | Current                               | 15.40        | EUR      |
+| 2024-10-23 12:38:18  | To VANESSA Dummy                    | TRANSFER                  | Current                               | -15.00       | EUR      |
+| 2024-10-31 17:34:07  | From VANESSA Dummy                  | TRANSFER                  | Current                               | 0.10         | EUR      |
+| 2024-11-07 08:51:21  | From VANESSA Dummy                  | TRANSFER                  | Current                               | 10.00        | EUR      |
+| 2024-11-07 09:10:17  | To Dummy SONNY                  | TRANSFER                  | Current                               | -9.00        | EUR      |
 
 I need to add the following additional columns based on the Description, Merchant, and Product_service columns:
 
@@ -86,11 +86,11 @@ I need to add the following additional columns based on the Description, Merchan
 
 | Date                 | Description                        | Merchant                  | Product_service                       | Amount (EUR) | Currency | Transaction Type | Merchant Name       | Merchant Category | Payment Method | Location | Recurring | Budget Category | Tags               | Notes                           Payment Status |
 |----------------------|------------------------------------|---------------------------|---------------------------------------|--------------|----------|-------------------|---------------------|-------------------|-----------------|----------|-----------|------------------|--------------------|---------------------------------|----------------|-----------------------|-------------------------------|-----------------|
-| 2024-11-21 00:00:00  | FOLGELASTSCHRIFT                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038356944342/. MEDION AG, Ihr Einkauf bei MED... | -1.99        | EUR      | Debit             | MEDION AG           | Electronics       | Debit Card     | Online   | Yes       | Groceries        | Shopping           | Purchase of electronic goods    | Completed       |
-| 2024-11-19 00:00:00  | FOLGELASTSCHRIFT                    | PayPal Europe S.a.r.l. et Cie S.C.A... | 1038321988189/PP.5854.PP/. DB Vertrieb GmbH, I... | -52.20       | EUR      | Debit             | DB Vertrieb GmbH    | Transport         | Bank Transfer  | Germany  | Yes       | Transportation    | Business Expense   | Monthly transport fees          | Completed       |
-| 2024-11-14 00:00:00  | GUTSCHR. UEBERWEISUNG                | Techniker Krankenkasse    | TK-BuchNr 04407888734 Beitragserstattung | 125.21       | EUR      | Credit            | Techniker K.        | Insurance         | Bank Transfer  | Germany  | No        | Insurance         | Reimbursement      | Contribution refund             | Completed       |
-| 2024-11-13 00:00:00  | GUTSCHR. UEBERWEISUNG                | INIS ENVIRONMENTAL CONSULTANTS... | AWV-MELDEPFLICHT BEACHTEN HOTLINE BUNDESBANK (0800) 1234-111 | 10.00        | EUR      | Credit            | INIS Environmental   | Utilities         | Bank Transfer  | Germany  | No        | Fees              | Banking Fees       | Reporting compliance fee        | Completed       |
-| 2024-11-13 00:00:00  | FOLGELASTSCHRIFT                    | E-Plus Service GmbH ...   | Gebuehr fuer Kombi-Paket S (alt) fuer Ihr Prep... | -7.99        | EUR      | Debit             | E-Plus Service      | Telecommunications | Debit Card     | Online   | No        | Utilities         | Fees               | Prepaid package fee             |  Completed       |
+| 2024-11-21 00:00:00  | Dummy                    | PayPal Europe S.a.r.l. et Cie S.C.A... | Dummy/. MEDION AG, Ihr Einkauf bei MED... | -1.99        | EUR      | Debit             | MEDION AG           | Electronics       | Debit Card     | Online   | Yes       | Groceries        | Shopping           | Purchase of electronic goods    | Completed       |
+| 2024-11-19 00:00:00  | Dummy                    | PayPal Europe S.a.r.l. et Cie S.C.A... | Dummy/PP.5854.PP/. DB Vertrieb GmbH, I... | -52.20       | EUR      | Debit             | DB Vertrieb GmbH    | Transport         | Bank Transfer  | Germany  | Yes       | Transportation    | Business Expense   | Monthly transport fees          | Completed       |
+| 2024-11-14 00:00:00  | GUTSCHR. Dummy                | Dummy Krankenkasse    | TK-BuchNr Dummy Beitragserstattung | 125.21       | EUR      | Credit            | Techniker K.        | Insurance         | Bank Transfer  | Germany  | No        | Insurance         | Reimbursement      | Contribution refund             | Completed       |
+| 2024-11-13 00:00:00  | GUTSCHR. Dummy                | Dummy ENVIRONMENTAL CONSULTANTS... | AWV-Dummy BEACHTEN HOTLINE BUNDESBANK (Dummy) 1234-111 | 10.00        | EUR      | Credit            | INIS Environmental   | Utilities         | Bank Transfer  | Germany  | No        | Fees              | Banking Fees       | Reporting compliance fee        | Completed       |
+| 2024-11-13 00:00:00  | Dummy                    | E-Plus Service GmbH ...   | Dummy fuer Kombi-Dummy S (alt) fuer Ihr Prep... | -7.99        | EUR      | Debit             | E-Plus Service      | Telecommunications | Debit Card     | Online   | No        | Utilities         | Fees               | Prepaid package fee             |  Completed       |
 
 **Data Chunk for Processing:**
 
