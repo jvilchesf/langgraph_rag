@@ -111,16 +111,10 @@ igh-level workflow describing how the project works in two major flows:
 
 ## Files
 
-- `agent_sql.py`:
-    Defines the Langgraph flow for parsing user questions, generating SQL, validating it, and executing it. The nodes are:
-        - parse_query: Checks if the question is relevant and identifies table/columns.
-        - get_unique_nouns: Fetches distinct values from relevant columns.
-        - generate_sql: Constructs an SQL query from the user question and discovered nouns.
-        - validate_and_fix_sql: Corrects table or column name errors.
-        - execute_sql: Executes the final SQL query and returns results.
+`agent_sql.py` defines the Langgraph flow for parsing user questions, generating SQL, and validating it. The process includes parse_query, which checks if the question is relevant and identifies table/columns; get_unique_nouns, which fetches distinct values from relevant columns; generate_sql, which constructs an SQL query from the user question and discovered nouns; validate_and_fix_sql, which corrects table or column name errors; and execute_sql, which executes the final SQL query and returns results.
 -`database.py` & `database_utils.py`:
-    -`database.py`: Manages steps involved in SQL query generation and execution.
-    -`database_utils.py`: Contains helper methods to retrieve the schema from the SQLite database and execute queries.
+    - `database.py`: Manages steps involved in SQL query generation and execution.
+    - `database_utils.py`: Contains helper methods to retrieve the schema from the SQLite database and execute queries.
 -`llm_manager.py`: Implements a manager class that interacts with the LLM (OpenAI Chat model). Used by both the Retriever flow and SQL flow for prompt engineering.
 -`prompt.py` (within `agent_retriever`): Map CSV columns to standardized fields and Augment the data with new columns.
 - `configuration.py`: Holds dataclasses that store configuration parameters, such as the database path or the model name. Each flow (retriever vs. SQL agent) has its own configuration class.
