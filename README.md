@@ -220,7 +220,9 @@ In the second part of the workflow, when I request data augmentation from the LL
 
 This data is saved in a SQL table to be queried in the next part of the flow.
 
-### Prompt
+
+## Prompt
+
 
 An important part of this workflow are the prompts, I'll leave here for you to check the prompt structure
 
