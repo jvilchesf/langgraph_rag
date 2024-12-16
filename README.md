@@ -1,7 +1,7 @@
 # Langchain & Langgraph Transactions
 
 ## Overview
-This personal project demonstrates how to use **Langchain** and **Langgraph** to unify and analyze banking transactions from three different CSV files. The process involves standardizing multilingual transactions and enabling a natural language interface for SQL queries against these records.
+This personal project demonstrates how to use **Langchain** and **Langgraph** to unify and analyze banking transactions from three different CSV files. The process involves standardizing multilingual transactions and enabling a natural language interface for SQL queries against these records. To run this process it is necessary to have langgraph studio.
 
 You’ll find two main flows:
 1. **Retriever Flow** – Responsible for reading and merging different transaction CSV files, standardizing them, augmenting their data (e.g., auto-adding new columns), and creating an SQLite database.
@@ -139,3 +139,53 @@ high-level workflow describing how the project works in two major flows:
 <p align="center">
 <img src="/images/portfolio_ai_genai_agent_sql.png" width =600 height = 200>
 </p>
+
+# Agent working
+
+In this section I'll try to explain how the workflow executions goes. I'll give a brief description of the data and output.
+
+## Input
+
+## Data Sources
+
+### 1. `20241122-4572815-umsatz.csv`
+- **Origin/Language**: This CSV is exported from a German banking system.  
+- **Delimiters/Encoding**: Uses semicolons (`;`) as delimiters and German-style numeric formats (where decimals are represented by commas).  
+- **Sample Columns**:  
+  - **Buchungstag (Booking Date)**: `21.11.24`  
+  - **Valutadatum (Value Date)**: `21.11.2024`  
+  - **Buchungstext (Transaction Text)**: `FOLGELASTSCHRIFT`  
+  - **Verwendungszweck (Purpose)**: `1038356944342/. MEDION AG, Ihr Einkauf bei MEDION AG`  
+  - **Beguenstigter/Zahlungspflichtiger (Beneficiary/Payer)**: `PayPal Europe S.a.r.l. et Cie S.C.A`  
+  - **Betrag (Amount)**: `-1,99` (EUR)  
+- **Notable Features**:  
+  - Columns are labeled in German.  
+  - The CSV likely contains direct debits, credits, and references to transaction details (e.g., PayPal transactions).  
+  - A “Kategorie” field is present but often empty in the sample.  
+
+---
+
+### 2. `account-statement_2023-11-01_2024-11-10_en_78d98f.csv`
+- **Origin/Language**: Export from an online banking or fintech platform.  
+- **Delimiters**: Uses commas (`,`) as the delimiter in a more standard CSV format.  
+- **Sample Columns**:  
+  - **Type**: `TOPUP`  
+  - **Product**: `Current`  
+  - **Started Date**: `2023-11-01 06:42:15`  
+  - **Completed Date**: `2023-11-01 06:42:16`  
+  - **Description**: `Payment from Vanessa Hofer`  
+  - **Amount**: `150.00` (EUR)  
+  - **Fee**: `0.00`  
+- **Notable Features**:  
+  - Uses standard decimal notation (`.`) for amounts.  
+  - Includes timestamps for started/completed transactions.  
+  - “State” field (`COMPLETED`) indicates transaction status; “Balance” column can track running account balances.  
+
+---
+
+
+## Process
+
+
+
+## Output
