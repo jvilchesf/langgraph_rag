@@ -137,5 +137,5 @@ high-level workflow describing how the project works in two major flows:
    - Run the validated SQL query against the SQLite database and return the results.
 
 <p align="center">
-<img src="/images/portfolio_ai_genai_agent_sql.png" width =400 height = 200>
+<img src="/images/portfolio_ai_genai_agent_sql.png" width =600 height = 200>
 </p>
