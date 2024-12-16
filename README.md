@@ -95,7 +95,10 @@ Bank transactions often come in varied formats and languages. Some statements ar
 - `utils.py`: File created to define an LLM function call.
 high-level workflow describing how the project works in two major flows:
 
-<img src="/images/portfolio_ai_genAI_agent_retriever.png" width = 600 height = 400>
+<p align="center">
+  <img src="/images/portfolio_ai_genai_agent_retriever.png" width="600" height="400">
+</p>
+
 
 ### Retriever Flow
 1. **Read CSV Files**:  
@@ -133,5 +136,6 @@ high-level workflow describing how the project works in two major flows:
 5. **Execute SQL**:  
    - Run the validated SQL query against the SQLite database and return the results.
 
-
-<img src="/images/portfolio_ai_genAI_agent_sql.png" width = 600 height = 400>
+<p align="center">
+<img src="/images/portfolio_ai_genai_agent_sql.png" width = 600 height = 400>
+</p>
