@@ -185,7 +185,87 @@ In this section I'll try to explain how the workflow executions goes. I'll give 
 
 
 ## Process
+The input data, as shown in the section above, has a different structure. In the first part of the process, I'll obtain and standardize a dataframe with the following columns:
+
+	Data columns (total 6 columns):
+	 #   Column           Non-Null Count  Dtype  
+	---  ------           --------------  -----  
+	 0   Date             9 non-null      object 
+	 1   Description      9 non-null      object 
+	 2   Merchant         9 non-null      object 
+	 3   Product_service  9 non-null      object 
+	 4   Amount (EUR)     9 non-null      float64
+	 5   Currency         9 non-null      object 
+
+In the second part of the workflow, when I request data augmentation from the LLM, I receive the following dataframe structure:
+
+	  #   Column             Non-Null Count  Dtype 
+	---  ------             --------------  ----- 
+	 0   date               9 non-null      object
+	 1   description        9 non-null      object
+	 2   merchant           9 non-null      object
+	 3   product_service    9 non-null      object
+	 4   amount_(eur)       9 non-null      object
+	 5   currency           9 non-null      object
+	 6   transaction_type   9 non-null      object
+	 7   merchant_name      8 non-null      object
+	 8   merchant_category  9 non-null      object
+	 9   payment_method     9 non-null      object
+	 10  location           6 non-null      object
+	 11  recurring          9 non-null      object
+	 12  budget_category    9 non-null      object
+	 13  tags               9 non-null      object
+	 14  notes              9 non-null      object
+	 15  payment_status     9 non-null      object
+
+This data is saved in a SQL table to be queried in the next part of the flow.
 
 
+### Prompt
 
-## Output
+An important part of this workflow are the prompts, I'll leave here for you to check the prompt structure
+
+      # Standardized fields you want to map to
+      standard_fields = [
+         "Date",
+         "Description",
+         "Merchant",
+         "Product_service",
+         "Amount (EUR)",
+         "Currency"
+      ]
+
+      # Example output format
+      output_example = """
+      {
+         "Date": "ColumnNameInSample",
+         "Description": "ColumnNameInSample",
+         "Merchant",     
+         "Product_service",
+         "Amount (EUR)": "ColumnNameInSample",
+         "Currency": "ColumnNameInSample"
+      }
+      """
+
+      # Prompt template
+      prompt = """
+      I have a CSV file with the following headers:
+
+      {headers}
+
+      Based on these column headers, please map them to the following standardized fields:
+
+      {standard_fields}
+
+      **Instructions:**
+
+      - Provide your answer **strictly** as a valid JSON object.
+      - Each standardized field should be mapped to the corresponding column name from the CSV headers.
+      - If a standardized field is not present in the sample, set its value to some value that might fit.
+      - **Do not include any explanations, comments, or additional text before or after the JSON.**
+      - Output **only** the JSON object.
+
+      **Example output format:**
+
+      {output_example}
+      """

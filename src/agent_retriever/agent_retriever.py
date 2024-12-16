@@ -23,7 +23,7 @@ async def standardize_csv(
     path_folder = config.path_folder
     csv_handler = CSVHanlder()
     df_merged = csv_handler.merge_files(path_folder, config)
-
+    print(f"{df_merged.info()=}")
     #return {"Content": df_merged.to_string(), "ProcessStatus":"standarize_csv_done"}
     return {"Content": [df_merged], "ProcessStatus":"standarize_csv_done"}
 
@@ -43,7 +43,7 @@ async def augmented_data(
     if df_augmented is None:
         # Handle the case where augmentation fails
         return {"Content": [], "ProcessStatus": "augmentation_failed"}
-
+    print(f"{df_augmented.info()=}")
     #return {"Content": df_augmented.to_string(), "ProcessStatus":"augmented_data_done"}
     return {"Content": [df_augmented], "ProcessStatus":"augmented_data_done"}
     
@@ -68,10 +68,8 @@ async def create_sqlite(
 
         # Define the path to the SQLite database file in the mounted data directory
         db_filename = 'augmented_data.sqlite'
-        db_destinny = 'src/agent_retriever/data'
+        db_destinny = 'src/agent_retriever'
         db_path = os.path.join(db_destinny, db_filename)
-
-        print(f"{df.info()=}")
 
         # Create a connection to the SQLite database file
         with sqlite3.connect(db_path) as conn:

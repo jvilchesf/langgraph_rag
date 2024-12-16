@@ -93,8 +93,18 @@ class CSVHanlder:
                 # call llm
                 response = self.call_llm(column_names, response_model)
 
-                #transform to dict
-                mapping = json.loads(response)
+                # Check if response is a valid JSON string
+                try:
+                    # Remove any leading or trailing whitespace
+                    response = response.strip()
+                    # Ensure the response is a valid JSON object
+                    if response.startswith('```json'):
+                        response = response.replace('```json', '').replace('```', '')
+                    mapping = json.loads(response)
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding JSON response for {file_path}: {e}")
+                    continue
+
 
                 # Create a new DataFrame with standardized fields
                 new_df = pd.DataFrame()
