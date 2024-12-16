@@ -227,47 +227,47 @@ This data is saved in a SQL table to be queried in the next part of the flow.
 
 An important part of this workflow are the prompts, I'll leave here for you to check the prompt structure
 
-      # Standardized fields you want to map to
-      standard_fields = [
-         "Date",
-         "Description",
-         "Merchant",
-         "Product_service",
-         "Amount (EUR)",
-         "Currency"
-      ]
+   # Standardized fields you want to map to
+   standard_fields = [
+      "Date",
+      "Description",
+      "Merchant",
+      "Product_service",
+      "Amount (EUR)",
+      "Currency"
+   ]
 
-      # Example output format
-      output_example = """
-      {
-         "Date": "ColumnNameInSample",
-         "Description": "ColumnNameInSample",
-         "Merchant",     
-         "Product_service",
-         "Amount (EUR)": "ColumnNameInSample",
-         "Currency": "ColumnNameInSample"
-      }
-      """
+   # Example output format
+   output_example = """
+   {
+      "Date": "ColumnNameInSample",
+      "Description": "ColumnNameInSample",
+      "Merchant",     
+      "Product_service",
+      "Amount (EUR)": "ColumnNameInSample",
+      "Currency": "ColumnNameInSample"
+   }
+   """
 
-      # Prompt template
-      prompt = """
-      I have a CSV file with the following headers:
+   # Prompt template
+   prompt = """
+   I have a CSV file with the following headers:
 
-      {headers}
+   {headers}
 
-      Based on these column headers, please map them to the following standardized fields:
+   Based on these column headers, please map them to the following standardized fields:
 
-      {standard_fields}
+   {standard_fields}
 
-      **Instructions:**
+   **Instructions:**
 
-      - Provide your answer **strictly** as a valid JSON object.
-      - Each standardized field should be mapped to the corresponding column name from the CSV headers.
-      - If a standardized field is not present in the sample, set its value to some value that might fit.
-      - **Do not include any explanations, comments, or additional text before or after the JSON.**
-      - Output **only** the JSON object.
+   - Provide your answer **strictly** as a valid JSON object.
+   - Each standardized field should be mapped to the corresponding column name from the CSV headers.
+   - If a standardized field is not present in the sample, set its value to some value that might fit.
+   - **Do not include any explanations, comments, or additional text before or after the JSON.**
+   - Output **only** the JSON object.
 
-      **Example output format:**
+   **Example output format:**
 
-      {output_example}
-      """
+   {output_example}
+   """
