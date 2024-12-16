@@ -184,7 +184,4 @@ In this section I'll try to explain how the workflow executions goes. I'll give 
 ---
 
 
-## Process
-The input data, as shown in the section above, has a different structure. In the first part of the process, I'll obtain and standardize a dataframe with the following columns:
-
 ## Prompts
