@@ -190,7 +190,4 @@ The input data, as shown in the section above, has a different structure. In the
 
 This data is saved in a SQL table to be queried in the next part of the flow.  
 
----
-
-
 ## Prompt
