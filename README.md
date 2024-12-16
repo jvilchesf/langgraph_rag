@@ -187,36 +187,6 @@ In this section I'll try to explain how the workflow executions goes. I'll give 
 ## Process
 The input data, as shown in the section above, has a different structure. In the first part of the process, I'll obtain and standardize a dataframe with the following columns:
 
-	Data columns (total 6 columns):
-	 #   Column           Non-Null Count  Dtype  
-	---  ------           --------------  -----  
-	 0   Date             9 non-null      object 
-	 1   Description      9 non-null      object 
-	 2   Merchant         9 non-null      object 
-	 3   Product_service  9 non-null      object 
-	 4   Amount (EUR)     9 non-null      float64
-	 5   Currency         9 non-null      object 
-
-In the second part of the workflow, when I request data augmentation from the LLM, I receive the following dataframe structure:
-
-	  #   Column             Non-Null Count  Dtype 
-	---  ------             --------------  ----- 
-	 0   date               9 non-null      object
-	 1   description        9 non-null      object
-	 2   merchant           9 non-null      object
-	 3   product_service    9 non-null      object
-	 4   amount_(eur)       9 non-null      object
-	 5   currency           9 non-null      object
-	 6   transaction_type   9 non-null      object
-	 7   merchant_name      8 non-null      object
-	 8   merchant_category  9 non-null      object
-	 9   payment_method     9 non-null      object
-	 10  location           6 non-null      object
-	 11  recurring          9 non-null      object
-	 12  budget_category    9 non-null      object
-	 13  tags               9 non-null      object
-	 14  notes              9 non-null      object
-	 15  payment_status     9 non-null      object
 
 This data is saved in a SQL table to be queried in the next part of the flow.  
 
