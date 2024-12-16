@@ -220,8 +220,6 @@ In the second part of the workflow, when I request data augmentation from the LL
 
 This data is saved in a SQL table to be queried in the next part of the flow.  
 
----
-
 
 ## Prompt used
 
