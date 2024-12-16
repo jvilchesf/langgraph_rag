@@ -93,7 +93,9 @@ Bank transactions often come in varied formats and languages. Some statements ar
 - `prompt.py`: The prompt is very important; here, the queries and desired output from the LLM are defined. This is where the magic happens.
 - `state.py`: States are structures of data that allow the saving of the answer of each step and communicate them to the next step. They are a very important part of the agents' workflows in langgraph.
 - `utils.py`: File created to define an LLM function call.
-igh-level workflow describing how the project works in two major flows:
+high-level workflow describing how the project works in two major flows:
+
+<img src="/images/portfolio_ai_genAI_agent_retriever.png" width = 400 height = 500>
 
 ### Retriever Flow
 1. **Read CSV Files**:  
@@ -132,3 +134,4 @@ igh-level workflow describing how the project works in two major flows:
    - Run the validated SQL query against the SQLite database and return the results.
 
 
+<img src="/images/portfolio_ai_genAI_agent_sql.png" width = 400 height = 500>
