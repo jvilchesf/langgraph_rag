@@ -222,8 +222,6 @@ This data is saved in a SQL table to be queried in the next part of the flow.
 
 
 ## Prompt
-
-
 An important part of this workflow are the prompts, I'll leave here for you to check the prompt structure
 
       # Standardized fields you want to map to
