@@ -218,10 +218,13 @@ In the second part of the workflow, when I request data augmentation from the LL
 	 14  notes              9 non-null      object
 	 15  payment_status     9 non-null      object
 
-This data is saved in a SQL table to be queried in the next part of the flow.
+This data is saved in a SQL table to be queried in the next part of the flow.  
+
+---
 
 
 ## Prompt
+
 An important part of this workflow are the prompts, I'll leave here for you to check the prompt structure
 
       # Standardized fields you want to map to
